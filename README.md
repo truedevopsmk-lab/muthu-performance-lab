@@ -1,5 +1,7 @@
 # Muthu Performance Lab
 
+This repo tracks workouts and running with a fully local Garmin dashboard.
+
 A beginner-friendly, fully local Garmin dashboard for macOS.
 
 This project reads your Garmin `.FIT` workout files from `GARMIN/Activity`, stores run metrics in SQLite, and shows insights in a Streamlit dashboard.
