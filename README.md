@@ -2,9 +2,9 @@
 
 This repo tracks workouts and running with a fully local Garmin dashboard.
 
-A beginner-friendly, fully local Garmin dashboard for macOS.
-
-This project reads your Garmin `.FIT` workout files from `GARMIN/Activity`, stores run metrics in SQLite, and shows insights in a Streamlit dashboard.
+You now have **two local dashboards**:
+- **Streamlit Dashboard** (original): interactive Python app
+- **PWA Dashboard** (new): installable web app (works offline after first load)
 
 ## What this dashboard includes
 
@@ -23,18 +23,32 @@ This project reads your Garmin `.FIT` workout files from `GARMIN/Activity`, stor
 ```text
 muthu-performance-lab/
 ├── app.py
+├── export_pwa_data.py
 ├── requirements.txt
 ├── run_dashboard.sh
+├── run_pwa.sh
 ├── README.md
 ├── data/
 │   └── garmin_export/
 │       └── (put GARMIN folder here)
-└── muthu_performance_lab/
-    ├── __init__.py
-    ├── config.py
-    ├── database.py
-    ├── fit_ingest.py
-    └── metrics.py
+├── muthu_performance_lab/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── database.py
+│   ├── fit_ingest.py
+│   ├── metrics.py
+│   └── pwa_export.py
+└── pwa/
+    ├── index.html
+    ├── manifest.webmanifest
+    ├── sw.js
+    ├── assets/
+    │   ├── app.js
+    │   ├── styles.css
+    │   ├── icon.svg
+    │   └── icon-maskable.svg
+    └── data/
+        └── dashboard_data.json (generated locally)
 ```
 
 ## Where to place your Garmin folder
@@ -43,7 +57,7 @@ Option A (recommended):
 1. Copy your exported `GARMIN` folder to:
    `muthu-performance-lab/data/garmin_export/GARMIN`
 
-Option B (already works in your current workspace):
+Option B:
 1. Keep `GARMIN` next to this project folder.
 2. The app auto-detects common locations, including sibling `GARMIN` folders.
 
@@ -53,7 +67,7 @@ Your `GARMIN` folder should contain:
 - `Sleep/`
 - `HRVStatus/`
 
-> Current app ingests **Activity FIT files** (required by your current scope).
+> Current ingestion scope is `Activity/*.FIT` (running workout metrics).
 
 ## Beginner setup (macOS)
 
@@ -64,28 +78,38 @@ Your `GARMIN` folder should contain:
 cd "/Users/muthukumar/Library/CloudStorage/OneDrive-FICO/Documents/Tech_Playground/Garmin-Dashboard/Garmin Device Data/muthu-performance-lab"
 ```
 
-3. Run one command:
+## Run the original Streamlit dashboard
 
 ```bash
 ./run_dashboard.sh
 ```
 
-That command will:
-- Create a Python virtual environment (`.venv`) if needed
-- Install dependencies
-- Start the dashboard
+## Run the new PWA dashboard
 
-When Streamlit starts, it will show a local URL (usually `http://localhost:8501`). Open it in your browser.
+```bash
+./run_pwa.sh
+```
+
+Then open:
+- `http://localhost:8765/pwa/`
+
+To install as an app (Chrome/Edge):
+1. Open the URL above.
+2. Click **Install App** (button in the page) or browser install prompt.
+
+### Optional: pass GARMIN path manually
+
+If auto-detect does not find your data:
+
+```bash
+./run_pwa.sh "/absolute/path/to/GARMIN"
+```
 
 ## Everyday use
 
-After first setup, run the same command whenever you want:
-
-```bash
-./run_dashboard.sh
-```
-
-If you add new FIT files, click **Refresh from FIT files** in the sidebar.
+- Add new FIT files.
+- Run `./run_pwa.sh` (or `./run_dashboard.sh`).
+- PWA data JSON is regenerated each run from SQLite.
 
 ## Database details
 
@@ -95,10 +119,10 @@ If you add new FIT files, click **Refresh from FIT files** in the sidebar.
 
 ## Notes
 
-- Everything runs fully local on your Mac.
-- No cloud services are used.
-- If a FIT file cannot be parsed, the app continues and logs the issue to:
-  `data/ingestion_errors.log`
+- Fully local on your Mac.
+- No cloud backend is used.
+- FIT parsing issues are logged to `data/ingestion_errors.log`.
+- Generated PWA data file: `pwa/data/dashboard_data.json`.
 
 ## Optional future upgrades
 

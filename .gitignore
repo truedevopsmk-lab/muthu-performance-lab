@@ -8,6 +8,7 @@ __pycache__/
 # Local app data
 data/performance_lab.db
 data/ingestion_errors.log
+pwa/data/dashboard_data.json
 
 # Garmin raw export (can be large/private)
 data/garmin_export/GARMIN/

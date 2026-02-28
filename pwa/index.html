@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c4a3a" />
+    <title>Muthu Performance Lab PWA</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Muthu Performance Lab</p>
+        <h1>Running Dashboard (PWA)</h1>
+        <p id="generatedAt" class="muted">Loading latest data...</p>
+      </div>
+      <div class="hero-actions">
+        <button id="installBtn" class="btn" hidden>Install App</button>
+        <button id="refreshBtn" class="btn btn-light">Refresh Data</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="emptyState" class="card" hidden>
+        <h2>No Data Yet</h2>
+        <p>Run <code>./run_pwa.sh</code> from your project folder to generate dashboard data.</p>
+      </section>
+
+      <section id="content" hidden>
+        <section class="kpis" id="kpis"></section>
+
+        <section class="grid">
+          <article class="card">
+            <h3>Monthly Mileage Trend</h3>
+            <svg id="monthlyChart" class="chart" viewBox="0 0 640 280" preserveAspectRatio="none"></svg>
+          </article>
+          <article class="card">
+            <h3>Pace vs Heart Rate</h3>
+            <svg id="scatterChart" class="chart" viewBox="0 0 640 280" preserveAspectRatio="none"></svg>
+          </article>
+          <article class="card">
+            <h3>Cadence Trend</h3>
+            <svg id="cadenceChart" class="chart" viewBox="0 0 640 280" preserveAspectRatio="none"></svg>
+          </article>
+          <article class="card">
+            <h3>Distance Per Run</h3>
+            <svg id="distanceChart" class="chart" viewBox="0 0 640 280" preserveAspectRatio="none"></svg>
+          </article>
+        </section>
+
+        <section class="card">
+          <h3>Run Table</h3>
+          <div class="table-wrap">
+            <table id="runTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Distance (km)</th>
+                  <th>Duration (min)</th>
+                  <th>Avg HR</th>
+                  <th>Max HR</th>
+                  <th>Avg Cadence</th>
+                  <th>Avg Pace</th>
+                  <th>HR Efficiency</th>
+                  <th>Calories</th>
+                  <th>Avg Temp</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./assets/app.js"></script>
+  </body>
+</html>
