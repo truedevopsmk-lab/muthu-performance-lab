@@ -1,0 +1,16 @@
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Local app data
+data/performance_lab.db
+data/ingestion_errors.log
+
+# Garmin raw export (can be large/private)
+data/garmin_export/GARMIN/
+
+# macOS
+.DS_Store
